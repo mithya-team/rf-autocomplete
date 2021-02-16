@@ -169,7 +169,6 @@ export const MUIAutocomplete = <T extends Record<string, any> | string>(props: I
 
                 }
             } else if (reason === 'input') {
-                console.log(value, event)
             }
         }
     }

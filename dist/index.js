@@ -240,9 +240,6 @@ var MUIAutocomplete = function (props) {
                     formikProps.setFieldValue(lodash.get(fieldConfig, 'valueKey'), multiple ? [] : (lodash.isString(value) ? values : null), false);
                 }
             }
-            else if (reason === 'input') {
-                console.log(value, event);
-            }
         }
     };
     var defaultRenderOptions = function (option, _a) {
@@ -260,7 +257,7 @@ var MUIAutocomplete = function (props) {
                     params.InputProps.endAdornment)) }), renderInputProps.InputProps || {}), inputProps: __assign(__assign(__assign({}, params.inputProps), inputProps), { autoComplete: 'new-password' }) })); } }, multipleProp, autoCompleteProps));
 };
 
-reactForms.attachField('autocomplet', React__default.createElement(MUIAutocomplete, null));
+reactForms.attachField('autocomplete', React__default.createElement(MUIAutocomplete, null));
 
 exports.MUIAutocomplete = MUIAutocomplete;
 //# sourceMappingURL=index.js.map
