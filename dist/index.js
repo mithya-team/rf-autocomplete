@@ -101,18 +101,20 @@ var MUIAutocomplete = function (props) {
     var _a = React.useState(), query = _a[0], setQuery = _a[1];
     var ref = React.useRef(null);
     var _b = props.fieldProps, fieldProps = _b === void 0 ? {} : _b, _c = props.formikProps, formikProps = _c === void 0 ? {} : _c, _d = props.fieldConfig, fieldConfig = _d === void 0 ? {} : _d;
-    var fieldError = reactForms.getFieldError((fieldConfig.valueKey || ''), formikProps);
+    var fieldError = reactForms.getFieldError(fieldConfig.valueKey || "", formikProps);
     var error = !!fieldError;
     var _e = fieldProps.highlighterProps, highlighterProps = _e === void 0 ? {
         highlightText: false,
-        highlightColor: '#ffff00'
-    } : _e, _f = fieldProps.options, options = _f === void 0 ? [] : _f, _g = fieldProps.renderInputProps, renderInputProps = _g === void 0 ? {} : _g, _h = fieldProps.inputProps, inputProps = _h === void 0 ? {} : _h, _j = fieldProps.getQueryResponse, getQueryResponse = _j === void 0 ? undefined : _j, _k = fieldProps.clearOnSelect, clearOnSelect = _k === void 0 ? false : _k, _l = fieldProps.onItemSelected, onItemSelected = _l === void 0 ? undefined : _l, _m = fieldProps.getOptionLabel, getOptionLabel = _m === void 0 ? function () { return ''; } : _m, transformValues = fieldProps.transformValues, multiple = fieldProps.multiple, autoCompleteProps = __rest(fieldProps, ["highlighterProps", "options", "renderInputProps", "inputProps", "getQueryResponse", "clearOnSelect", "onItemSelected", "getOptionLabel", "transformValues", "multiple"]);
+        highlightColor: "#ffff00",
+    } : _e, _f = fieldProps.options, options = _f === void 0 ? [] : _f, _g = fieldProps.renderInputProps, renderInputProps = _g === void 0 ? {} : _g, _h = fieldProps.inputProps, inputProps = _h === void 0 ? {} : _h, _j = fieldProps.getQueryResponse, getQueryResponse = _j === void 0 ? undefined : _j, _k = fieldProps.clearOnSelect, clearOnSelect = _k === void 0 ? false : _k, _l = fieldProps.onItemSelected, onItemSelected = _l === void 0 ? undefined : _l, _m = fieldProps.getOptionLabel, getOptionLabel = _m === void 0 ? function (o) { return o; } : _m, //assumption that options is a string array
+    transformValues = fieldProps.transformValues, multiple = fieldProps.multiple, autoCompleteProps = __rest(fieldProps, ["highlighterProps", "options", "renderInputProps", "inputProps", "getQueryResponse", "clearOnSelect", "onItemSelected", "getOptionLabel", "transformValues", "multiple"]);
     var _o = React.useState([]), defaultOptions = _o[0], setDefaultOptions = _o[1];
     var _p = React.useState(false), open = _p[0], setOpen = _p[1];
     var _q = React.useState(false), loading = _q[0], setLoading = _q[1];
-    var _r = React.useState(''), globalTerm = _r[0], setGlobalTerm = _r[1];
+    var _r = React.useState(""), globalTerm = _r[0], setGlobalTerm = _r[1];
     var _s = React.useState([]), globalQueries = _s[0], setGlobalQueries = _s[1];
-    var value = lodash.get(formikProps, "values." + (lodash.get(fieldConfig, 'valueKey') || '')) || (multiple ? [] : null);
+    var value = lodash.get(formikProps, "values." + (lodash.get(fieldConfig, "valueKey") || "")) ||
+        (multiple ? [] : null);
     var handleQueryResponse = function (newTerm) { return __awaiter(void 0, void 0, void 0, function () {
         var result, newOptions_1, e_1;
         return __generator(this, function (_a) {
@@ -174,7 +176,7 @@ var MUIAutocomplete = function (props) {
                         lastQueryIndex = lodash.findIndex(queries, function (q) { return q.order === lastQueryOrder; });
                         lastQuery = queries[lastQueryIndex];
                         now = new Date().getTime();
-                        if (!(lastQuery && (now - lastQuery.sendAt < TIME_BETWEEN_REQS))) return [3 /*break*/, 1];
+                        if (!(lastQuery && now - lastQuery.sendAt < TIME_BETWEEN_REQS)) return [3 /*break*/, 1];
                         setGlobalQueries(__spreadArrays(queries));
                         setTimeout(function () {
                             handleChange(newTerm, true);
@@ -184,7 +186,7 @@ var MUIAutocomplete = function (props) {
                         queries.push({
                             term: newTerm,
                             sendAt: now,
-                            order: (lastQueryOrder || 0) + 1
+                            order: (lastQueryOrder || 0) + 1,
                         });
                         _a.label = 2;
                     case 2:
@@ -206,7 +208,7 @@ var MUIAutocomplete = function (props) {
                         return [3 /*break*/, 5];
                     case 4:
                         error_1 = _a.sent();
-                        console.log('error', error_1);
+                        console.log("error", error_1);
                         queries = lodash.filter(queries, function (q) { return q.term !== newTerm; });
                         setDefaultOptions([]);
                         setGlobalQueries(__spreadArrays(queries));
@@ -219,25 +221,25 @@ var MUIAutocomplete = function (props) {
     var onItemSelect = function (event, value) {
         event.preventDefault();
         if (clearOnSelect) {
-            setQuery('');
+            setQuery("");
         }
         if (value) {
             if (onItemSelected)
                 onItemSelected(value);
             else {
-                formikProps.setFieldValue(lodash.get(fieldConfig, 'valueKey'), value, false);
+                formikProps.setFieldValue(lodash.get(fieldConfig, "valueKey"), value, false);
             }
         }
     };
     var onInputChange = function (event, values, reason) {
         if (event) {
             event.preventDefault();
-            if (reason === 'clear') {
+            if (reason === "clear") {
                 if (onItemSelected) {
-                    onItemSelected((multiple ? [] : (lodash.isString(value) ? values : null)));
+                    onItemSelected((multiple ? [] : lodash.isString(value) ? values : null));
                 }
                 else {
-                    formikProps.setFieldValue(lodash.get(fieldConfig, 'valueKey'), multiple ? [] : (lodash.isString(value) ? values : null), false);
+                    formikProps.setFieldValue(lodash.get(fieldConfig, "valueKey"), multiple ? [] : lodash.isString(value) ? values : null, false);
                 }
             }
         }
@@ -245,16 +247,20 @@ var MUIAutocomplete = function (props) {
     var defaultRenderOptions = function (option, _a) {
         var inputValue = _a.inputValue;
         /*THIS WILL BE USED TO RENDER OPTION AND HIGHLIGHT IF USER DOESN'T PROVIDE ANY RENDER OPTIONS */
-        return (React.createElement("div", null, (highlighterProps.highlightText === false) ?
-            //NO HIGHLIGHT
-            React.createElement("span", null, getOptionLabel(option)) :
-            //DEFAULT HIGHLIGHT WITH USER STYLES IF PROVIDED
-            React.createElement(Highlighter, { searchWords: [inputValue], textToHighlight: getOptionLabel(option), highlightStyle: __assign({ backgroundColor: highlighterProps.highlightColor }, highlighterProps.highlighterStyles) })));
+        return (React.createElement("div", null, highlighterProps.highlightText === false ? (
+        //NO HIGHLIGHT
+        React.createElement("span", null, getOptionLabel(option))) : (
+        //DEFAULT HIGHLIGHT WITH USER STYLES IF PROVIDED
+        React.createElement(Highlighter, { searchWords: [inputValue], textToHighlight: getOptionLabel(option), highlightStyle: __assign({ backgroundColor: highlighterProps.highlightColor }, highlighterProps.highlighterStyles) }))));
     };
     var multipleProp = multiple ? { multiple: true } : {};
-    return React.createElement(Autocomplete, __assign({ onChange: onItemSelect, onInputChange: onInputChange, getOptionLabel: getOptionLabel, onOpen: function () { setOpen(true); }, open: open, onClose: function () { setOpen(false); }, options: options.length > 0 ? options : defaultOptions, renderOption: defaultRenderOptions, id: fieldConfig.valueKey, disableClearable: clearOnSelect, value: transformValues ? transformValues(value) : value, renderInput: function (params) { return React.createElement(core.TextField, __assign({}, params, { value: query, ref: ref, onChange: function (e) { return handleChange(e.target.value); }, fullWidth: true, error: error, helperText: fieldError }, renderInputProps, { InputProps: __assign(__assign(__assign({}, params.InputProps), { endAdornment: (React.createElement(React.Fragment, null,
-                    loading ? React.createElement(core.CircularProgress, { color: "primary", size: 20 }) : null,
-                    params.InputProps.endAdornment)) }), renderInputProps.InputProps || {}), inputProps: __assign(__assign(__assign({}, params.inputProps), inputProps), { autoComplete: 'new-password' }) })); } }, multipleProp, autoCompleteProps));
+    return (React.createElement(Autocomplete, __assign({ onChange: onItemSelect, onInputChange: onInputChange, getOptionLabel: getOptionLabel, onOpen: function () {
+            setOpen(true);
+        }, open: open, onClose: function () {
+            setOpen(false);
+        }, options: options.length > 0 ? options : defaultOptions, renderOption: defaultRenderOptions, id: fieldConfig.valueKey, disableClearable: clearOnSelect, value: transformValues ? transformValues(value) : value, renderInput: function (params) { return (React.createElement(core.TextField, __assign({}, params, { value: query, ref: ref, onChange: function (e) { return handleChange(e.target.value); }, fullWidth: true, error: error, helperText: fieldError }, renderInputProps, { InputProps: __assign(__assign(__assign({}, params.InputProps), { endAdornment: (React.createElement(React.Fragment, null,
+                    loading ? (React.createElement(core.CircularProgress, { color: "primary", size: 20 })) : null,
+                    params.InputProps.endAdornment)) }), (renderInputProps.InputProps || {})), inputProps: __assign(__assign(__assign({}, params.inputProps), inputProps), { autoComplete: "new-password" }) }))); } }, multipleProp, autoCompleteProps)));
 };
 
 reactForms.attachField('autocomplete', React__default.createElement(MUIAutocomplete, null));

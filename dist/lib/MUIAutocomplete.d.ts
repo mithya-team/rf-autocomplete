@@ -1,6 +1,6 @@
-import { InputBaseComponentProps } from '@material-ui/core';
-import { AutocompleteProps, RenderInputParams } from '@material-ui/lab/Autocomplete';
-import { IFieldProps } from 'react-forms';
+import { InputBaseComponentProps } from "@material-ui/core";
+import { AutocompleteProps, RenderInputParams } from "@material-ui/lab/Autocomplete";
+import { IFieldProps } from "react-forms";
 export interface IHighlighterProps {
     highlightText?: boolean;
     highlightColor?: string;
