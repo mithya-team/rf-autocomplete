@@ -1,5 +1,5 @@
 import { InputBaseComponentProps } from "@material-ui/core";
-import { AutocompleteProps, RenderInputParams } from "@material-ui/lab/Autocomplete";
+import { AutocompleteProps, AutocompleteRenderInputParams } from "@material-ui/lab/Autocomplete";
 import { IFieldProps } from "react-forms";
 export interface IHighlighterProps {
     highlightText?: boolean;
@@ -12,13 +12,13 @@ export interface TQueries<T> {
     order: number;
     options?: T[];
 }
-export interface IMUIAutoCompleteProps<T> extends Partial<AutocompleteProps<T>> {
+export interface IMUIAutoCompleteProps<T> extends Partial<AutocompleteProps<T, boolean | undefined, boolean | undefined, boolean | undefined>> {
     options?: T[];
-    renderInputProps?: RenderInputParams;
+    renderInputProps?: AutocompleteRenderInputParams;
     inputProps?: InputBaseComponentProps;
     highlighterProps?: IHighlighterProps;
     getQueryResponse?: (newTerm: string) => Promise<Array<T>>;
-    onItemSelected?: (value: T | T[] | null) => void;
+    onItemSelected?: (value: string | T | NonNullable<T> | (string | T)[]) => void;
     multiple?: boolean;
     transformValues?: (values: any) => T | T[];
     clearOnSelect?: boolean;
