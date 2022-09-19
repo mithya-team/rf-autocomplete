@@ -253,7 +253,7 @@ var MUIAutocomplete = function (props) {
             setOpen(false);
         }, options: options.length > 0 ? options : defaultOptions, renderOption: defaultRenderOptions, id: fieldConfig.valueKey, disableClearable: clearOnSelect, value: transformValues ? transformValues(value) : value, renderInput: function (params) { return (createElement(TextField, __assign({}, params, { value: query, ref: ref, onChange: function (e) { return handleChange(e.target.value); }, error: error, helperText: fieldError }, renderInputProps, { InputProps: __assign(__assign(__assign({}, params.InputProps), { endAdornment: (createElement(Fragment, null,
                     loading ? (createElement(CircularProgress, { color: "primary", size: 20 })) : null,
-                    params.InputProps.endAdornment)) }), (renderInputProps.InputProps || {})), inputProps: __assign(__assign(__assign({}, params.inputProps), inputProps), { autoComplete: "new-password" }) }))); } }, multipleProp, autoCompleteProps, { fullWidth: true })));
+                    params.InputProps.endAdornment)) }), (renderInputProps.InputProps || {})), inputProps: __assign(__assign(__assign({}, params.inputProps), inputProps), { autoComplete: inputProps.autoComplete || "new-password" }) }))); } }, multipleProp, autoCompleteProps, { fullWidth: true })));
 };
 
 attachField('autocomplete', React__default.createElement(MUIAutocomplete, null));

@@ -274,7 +274,7 @@ export const MUIAutocomplete = <T extends Record<string, any> | string>(
 					inputProps={{
 						...params.inputProps,
 						...inputProps,
-						autoComplete: "new-password",
+						autoComplete:inputProps.autoComplete|| "new-password",
 					}}
 				/>
 			)}
